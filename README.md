@@ -17,7 +17,7 @@ React component which enables in-line editing on double click.
         onInputChange={this.yourHandelingFunction}
     />
     
-  When the item is changed, the component will pass a new value to onInputChange and it will be accessable in your function:
+  When the item is changed, the component will pass a new value to `onInputChange` and it will be accessable in your function:
   
     yourHandelingFunction(updatedText) {
         console.log(updatedText);
