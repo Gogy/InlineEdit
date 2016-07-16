@@ -1,9 +1,14 @@
 # EditableItem
 
-React component which enables in-line editing on double click
+React component which enables in-line editing on double click.
+
+* Double click on text will enable edit mode
+* Esc key on keyboard will exit the edit mode and cancel changes
+* Event onBlur will also exit the edit mode and cancel changes
+* Enter key will save the changes
 
 ## Usage 
-    const EditableItem = require('your-path/EditableItem.react.js');
+    const EditableItem = require('your-path/EditableItem.react');
     
   Then when you need in-line editable text you simply do following:
   
