@@ -24,4 +24,8 @@ const EditableItem = require('your-path/EditableItem.react');
 yourHandelingFunction(updatedText) {
     console.log(updatedText);
 }
+```
     
+## Demo
+
+![alt text](http://i.imgur.com/tg0dD6r.gif")
