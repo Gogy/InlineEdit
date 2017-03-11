@@ -14,7 +14,7 @@ const EditableItem = require('your-path/EditableItem.react');
   Then when you need in-line editable text you simply do following:
 
 ```javascript
-<EditableItem>
+<EditableItem
     text='Your text'
     onInputChange={this.yourHandelingFunction}
 />
