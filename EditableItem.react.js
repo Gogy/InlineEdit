@@ -1,18 +1,43 @@
-var React = require('react');
+const React = require('react');
 
-const EditableItem = React.createClass({
-    displayName: 'EditableItem',
+module.exports = React.createClass({
+    displayName: 'InlineEdit',
 
     propTypes: {
-        onItemUpdate: React.PropTypes.func
+        /**
+         * Text value for inline editing
+         */
+        text: React.PropTypes.string,
+        /**
+         * Callback function triggered once the text has been updated
+         */
+        updateCB: React.PropTypes.func,
+        /**
+         * Callback function when you cancel editing text (for example by pressing esc button)
+         */
+        cancelEditCB: React.PropTypes.func,
+        /**
+         * If you want to activate edit mode from outside of this component (not by default action of double clicking)
+         */
+        editModeActive: React.PropTypes.bool,
     },
 
     getInitialState() {
         return {
             itemText: this.props.text,
             inputValue: this.props.text,
-            editMode: false
+            editMode: false,
         };
+    },
+
+    componentWillReceiveProps(newProps) {
+        if (this.props == newProps)) {
+            this.setState({
+                editMode: newProps.editModeActive,
+                itemText: newProps.text,
+                inputValue: newProps.text
+            });
+        }
     },
 
     render() {
@@ -33,11 +58,13 @@ const EditableItem = React.createClass({
         this.setState({
             inputValue: this.state.itemText,
             editMode: false
-        })
+        }, () => {
+            this.props.cancelEditCB();
+        });
     },
 
     _showItem() {
-        return this.state.itemText
+        return this.state.itemText;
     },
 
     _showEdit() {
@@ -47,8 +74,14 @@ const EditableItem = React.createClass({
                 onChange={this._onInputChange}
                 onBlur={this._cancelEdit}
                 onKeyDown={this._handleKeyPress}
-                style={{background: 'transparent', border: '0px', outline: 'none', width:'100%', padding: '0px', margin: '0px'}}
+                className={this.props.className}
                 autoFocus
+                onFocus={function(e) {
+                    // Sets cursor to the end of the text
+                    const inputValue = e.target.value;
+                    e.target.value = '';
+                    e.target.value = inputValue;
+                }}
             />
         );
     },
@@ -63,7 +96,7 @@ const EditableItem = React.createClass({
         if(e.which == 13) {
             this._saveOnEnter();
         } else if(e.which == 27) {
-            this._cancelEdit()
+            this._cancelEdit();
         }
     },
 
@@ -71,14 +104,8 @@ const EditableItem = React.createClass({
         this.setState({
             itemText: this.state.inputValue,
             editMode: false
+        }, () => {
+            this.props.updateCB(this.state.inputValue);
         });
-
-        try {
-            this.props.onItemUpdate(this.state.inputValue);
-        } catch(err) {
-            console.log('You are not handeling inline updates. You need onItemUpdate prop function')
-        }
     }
 });
-
-module.exports = EditableItem;
