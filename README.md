@@ -1,4 +1,4 @@
-# EditableItem
+# InlineEdit
 
 React component which enables in-line editing on double click.
 
@@ -9,19 +9,19 @@ React component which enables in-line editing on double click.
 
 ## Usage 
 ```javascript
-const EditableItem = require('your-path/EditableItem.react');
+const InlineEdit = require('your-path/InlineEdit.react');
 ```   
   Then when you need in-line editable text you simply do following:
 
 ```javascript
-<EditableItem
+<InlineEdit
     text='Your text'
-    onInputChange={this.yourHandelingFunction}
+    updateCB={this.someCallbackFunction}
 />
 ```
-  When the item is changed, the component will pass a new value to `onInputChange` and it will be accessable in your function:
+  When the item is changed, the component will pass a new value to `updateCB` and it will be accessable in your function:
 ```javascript
-yourHandelingFunction(updatedText) {
+someCallbackFunction(updatedText) {
     console.log(updatedText);
 }
 ```
